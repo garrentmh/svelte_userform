@@ -13,9 +13,7 @@
 	</main>
 
 	<footer>
-		<p>
-			visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to learn about SvelteKit
-		</p>
+		<p>User Management System © 2025</p>
 	</footer>
 </div>
 
@@ -42,16 +40,16 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		padding: 12px;
-	}
-
-	footer a {
-		font-weight: bold;
+		padding: 1rem;
+		background: var(--color-bg-1);
+		border-top: 1px solid var(--color-bg-2);
+		color: var(--color-text-1);
+		font-size: 0.9rem;
 	}
 
 	@media (min-width: 480px) {
 		footer {
-			padding: 12px 0;
+			padding: 1rem 0;
 		}
 	}
 </style>
