@@ -1,5 +1,9 @@
 <script lang="ts">
 	import { createUser, getAllUsers, type User } from '$lib/db/users';
+	import type { PageData } from './$types';
+
+	// Get prerendered data from the load function
+	export let data: PageData;
 
 	let currentView: 'home' | 'create' | 'view' = 'home';
 	
@@ -74,13 +78,31 @@
 </script>
 
 <svelte:head>
-	<title>User Management</title>
-	<meta name="description" content="User management application" />
+	<title>{data.meta.title}</title>
+	<meta name="description" content={data.meta.description} />
+	<link rel="canonical" href={data.meta.canonical} />
 </svelte:head>
 
 {#if currentView === 'home'}
 	<section class="home">
-		<h1>User Management System</h1>
+		<h1>{data.appConfig.title}</h1>
+		<p class="subtitle">{data.appConfig.description}</p>
+		
+		{#if data.initialStats.isPrerendered}
+			<div class="prerender-info">
+				<small>🚀 This page was prerendered at build time: {new Date(data.appConfig.buildTime).toLocaleString()}</small>
+			</div>
+		{/if}
+		
+		<div class="features">
+			<h3>Features:</h3>
+			<ul>
+				{#each data.appConfig.features as feature}
+					<li>{feature}</li>
+				{/each}
+			</ul>
+		</div>
+		
 		<div class="button-container">
 			<button 
 				class="btn btn-primary" 
@@ -216,6 +238,48 @@
 		margin-bottom: 2rem;
 		color: var(--color-theme-1);
 		font-size: 2.5rem;
+	}
+
+	.subtitle {
+		font-size: 1.2rem;
+		color: var(--color-text-1);
+		margin-bottom: 1rem;
+		opacity: 0.8;
+	}
+
+	.prerender-info {
+		background: #e8f5e8;
+		border: 1px solid #4caf50;
+		border-radius: 4px;
+		padding: 0.5rem 1rem;
+		margin: 1rem 0;
+		color: #2e7d32;
+		font-weight: 500;
+	}
+
+	.features {
+		background: #f8f9fa;
+		border-radius: 8px;
+		padding: 1.5rem;
+		margin: 2rem 0;
+		max-width: 400px;
+		text-align: left;
+	}
+
+	.features h3 {
+		margin: 0 0 1rem 0;
+		color: var(--color-theme-1);
+		text-align: center;
+	}
+
+	.features ul {
+		margin: 0;
+		padding-left: 1.5rem;
+	}
+
+	.features li {
+		margin: 0.5rem 0;
+		color: var(--color-text);
 	}
 
 	.button-container {
